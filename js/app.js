@@ -47,8 +47,8 @@ const handleById = async (id) => {
 
     const div = document.createElement("div");
     div.innerHTML = `
-    <div class="card card-side bg-white shadow-xl p-5 my-5">
-                <figure><img src="${image_url}" alt="refuse-Shelter" border="0"></figure>
+    <div class="card card-side bg-white shadow-xl p-5 my-10 flex flex-col lg:flex-row">
+                <figure><img src="${image_url}" alt="refuse-Shelter" border="0" class="lg:w-[650px]"></figure>
                 <div class="card-body">
                     <h2 class="card-title">The best fashion influencers to follow for sartorial inspiration</h2>
                     <p>From our favourite UK influencers to the best missives from Milan and the coolest New Yorkers,
@@ -59,7 +59,7 @@ const handleById = async (id) => {
                         Fancy some shopping deals? Check out these amazing sales: Zara Black Friday, ASOS Black Friday,
                         Missoma Black Friday and Gucci Black Friday...
                     </p>
-                    <div class="flex justify-between items-center my-8">
+                    <div class="flex flex-col lg:flex-row justify-between items-center my-8">
                         <div class="flex items-center gap-5">
                             <div class="avatar">
                                 <div class="w-14 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
@@ -71,7 +71,7 @@ const handleById = async (id) => {
                                 <p>${author.published_date} </p>
                             </div>
                         </div>
-                        <div>
+                        <div class="mt-4 nd:mt-0" >
                             <h4>${total_view}M</h4>
                         </div>
                         <div>
