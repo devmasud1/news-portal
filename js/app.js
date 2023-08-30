@@ -28,42 +28,44 @@ const handleAllNews = async () => {
     tabContainer.appendChild(div);
   });
 
-  handleById((id = "08"));
+  handleById((id = "05"));
 };
 
 const handleById = async (id) => {
-  console.log(id);
   const res = await fetch(
     `https://openapi.programming-hero.com/api/news/category/${id}`
   );
   const data = await res.json();
-  const result = data.data;
+  let result = data.data;
+
+  const noNews = document.getElementById("no-news");
+  if (result.length === 0) {
+    noNews.classList.remove("hidden");
+  } else {
+    noNews.classList.add("hidden");
+  }
+
+  const footerContainer = document.getElementById("footer-container");
 
   const cardContainer = document.getElementById("card-container");
   cardContainer.textContent = "";
-  result.forEach((category) => {
-    console.log(category);
-    const { author, total_view, image_url } = category;
 
+  result.forEach((category) => {
+    const { title, details, author, total_view, image_url, _id } = category;
     const div = document.createElement("div");
     div.innerHTML = `
     <div class="card card-side bg-white shadow-xl p-5 my-10 flex flex-col lg:flex-row">
                 <figure><img src="${image_url}" alt="refuse-Shelter" border="0" class="lg:w-[650px]"></figure>
                 <div class="card-body">
-                    <h2 class="card-title">The best fashion influencers to follow for sartorial inspiration</h2>
-                    <p>From our favourite UK influencers to the best missives from Milan and the coolest New Yorkers,
-                        read on some of the best fashion blogs out there, and for even more inspiration, do head to our
-                        separate black fashion influencer round-up.
-                    </p>
-                    <p>
-                        Fancy some shopping deals? Check out these amazing sales: Zara Black Friday, ASOS Black Friday,
-                        Missoma Black Friday and Gucci Black Friday...
-                    </p>
+                    <h2 class="card-title">${title.slice(0, 40)}</h2>
+                    <p>${details.slice(0, 180)} </p>
                     <div class="flex flex-col lg:flex-row justify-between items-center my-8">
                         <div class="flex items-center gap-5">
                             <div class="avatar">
                                 <div class="w-14 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                    <img src="${author.img}" alt="refuse-Shelter" border="0">
+                                    <img src="${
+                                      author.img
+                                    }" alt="refuse-Shelter" border="0">
                                 </div>
                             </div>
                             <div>
@@ -84,14 +86,56 @@ const handleById = async (id) => {
                             </div>
                         </div>
                         <div class="card-actions justify-end">
-                            <a><i class="fa-solid fa-arrow-right"></i></a>         
+                            <a onclick="handleDetails('${_id}')"><i class="fa-solid fa-arrow-right cursor-pointer mt-5 md:mt-0"></i></a>         
                         </div>
                     </div>
                 </div>
             </div>
     `;
     cardContainer.appendChild(div);
+    footerContainer.innerHTML = `
+    <div class="footer footer-center p-4 bg-base-300 
+    text-base-content">
+    <p>Copyright © 2023 - All right reserved by portal news</p>
+    </div>
+    `;
   });
+};
+
+const handleDetails = async (newsId) => {
+  const res = await fetch(
+    `https://openapi.programming-hero.com/api/news/${newsId}`
+  );
+  const data = await res.json();
+  const news = data.data[0];
+  const { author, title, details } = news;
+
+  const modalContainer = document.getElementById("modal-container");
+  modalContainer.textContent = "";
+
+  const div = document.createElement("div");
+  div.innerHTML = `
+    <dialog id="my_modal" class="modal">
+    <form method="dialog" class="modal-box">
+        <div class="card  ">
+             
+         <div class="card-body">
+            <h2 class="card-title">${title}</h2>
+            <p>${details.slice(0, 7000)}</p>
+        <br/>
+        <p class="text-xl md:text-2xl">Published by: ${author.name}</p>
+         </div>
+     </div>
+        <div class="modal-action">
+        <button class="btn">Close</button>
+        </div>
+    </form>
+    </dialog>
+  `;
+  modalContainer.appendChild(div);
+
+  const modal = document.getElementById("my_modal");
+  modal.showModal();
 };
 
 handleAllNews();
