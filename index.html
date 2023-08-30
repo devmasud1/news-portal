@@ -16,11 +16,17 @@
 </head>
 
 <body>
+    <div id="loading-spinner" class="absolute top-2/4 w-[100%] hidden">
+        <div class="flex justify-center items-center ">
+            <span class="loading loading-infinity loading-lg"></span>
+        </div>
+    </div>
     <header class="container mx-auto">
         <div id="tabContainer" class="flex flex-wrap justify-center gap-5 py-10 mx-auto"></div>
     </header>
+
     <main class="container mx-auto">
-        <div id="card-container"> </div>
+        <div id="card-container"></div>
         <div id="modal-container"></div>
         <div id="no-news" class="hidden">
             <div class="flex justify-center items-center w-full h-[83vh]">
@@ -28,6 +34,7 @@
             </div>
         </div>
     </main>
+    
     <footer>
         <div id="footer-container"></div>
     </footer>

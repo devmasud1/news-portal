@@ -1,12 +1,5 @@
-// const allNews = `https://openapi.programming-hero.com/api/news/categories`;
-
-// const newsCategory = ` https://openapi.programming-hero.com/api/news/category/{category_id}`;
-
-// const NewsDetail = `https://openapi.programming-hero.com/api/news/{news_id}`;
-
-// const MissingData = ` https://openapi.programming-hero.com/api/news/2e78e5e0310c2e9adbb6efb1a263e745`;
-
 const handleAllNews = async () => {
+  handleLoading(true);
   const res = await fetch(
     `https://openapi.programming-hero.com/api/news/categories`
   );
@@ -29,6 +22,15 @@ const handleAllNews = async () => {
   });
 
   handleById((id = "05"));
+};
+
+const handleLoading = (loading) => {
+  const loadingSpinner = document.getElementById("loading-spinner");
+  if (loading === true) {
+    loadingSpinner.classList.remove("hidden");
+  } else {
+    loadingSpinner.classList.add("hidden");
+  }
 };
 
 const handleById = async (id) => {
@@ -74,7 +76,9 @@ const handleById = async (id) => {
                             </div>
                         </div>
                         <div class="mt-4 nd:mt-0" >
-                            <h4>Total view: ${total_view?total_view: "00"}</h4>
+                            <h4>Total view: ${
+                              total_view ? total_view : "00"
+                            }</h4>
                         </div>
                         <div>
                             <div class="rating">
@@ -100,6 +104,7 @@ const handleById = async (id) => {
     </div>
     `;
   });
+  handleLoading(false);
 };
 
 const handleDetails = async (newsId) => {
