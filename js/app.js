@@ -74,7 +74,7 @@ const handleById = async (id) => {
                             </div>
                         </div>
                         <div class="mt-4 nd:mt-0" >
-                            <h4>${total_view}M</h4>
+                            <h4>Total view: ${total_view?total_view: "00"}</h4>
                         </div>
                         <div>
                             <div class="rating">
